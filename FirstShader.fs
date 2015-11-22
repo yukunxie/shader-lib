@@ -8,9 +8,9 @@
 
 uniform sampler2D uSampler;
 //
-varying lowp vec2 vTexCoord;
+varying highp vec2 vTexCoord;
 //
-varying lowp vec4 colorVarying;
+varying highp vec4 colorVarying;
 
 void main()
 {

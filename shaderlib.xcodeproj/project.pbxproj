@@ -7,30 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		740F96671BF3053700C1E3E5 /* GLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 740F96661BF3053700C1E3E5 /* GLColor.m */; settings = {ASSET_TAGS = (); }; };
-		740F966A1BF3058C00C1E3E5 /* GLVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = 740F96691BF3058C00C1E3E5 /* GLVertex.m */; settings = {ASSET_TAGS = (); }; };
+		740F96671BF3053700C1E3E5 /* GLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 740F96661BF3053700C1E3E5 /* GLColor.m */; };
+		740F966A1BF3058C00C1E3E5 /* GLVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = 740F96691BF3058C00C1E3E5 /* GLVertex.m */; };
 		740F966C1BF3749000C1E3E5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 740F966B1BF3749000C1E3E5 /* QuartzCore.framework */; };
-		740F967E1BF37F8D00C1E3E5 /* GLMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 740F967D1BF37F8D00C1E3E5 /* GLMatrix.m */; settings = {ASSET_TAGS = (); }; };
-		74943D5F1BF0B4C300F3B506 /* FirstShader.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74943D5D1BF0B4C300F3B506 /* FirstShader.fs */; settings = {ASSET_TAGS = (); }; };
-		74943D601BF0B4C300F3B506 /* FirstShader.vs in Resources */ = {isa = PBXBuildFile; fileRef = 74943D5E1BF0B4C300F3B506 /* FirstShader.vs */; settings = {ASSET_TAGS = (); }; };
-		74943D641BF0C52100F3B506 /* PPNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 74943D631BF0C52100F3B506 /* PPNode.m */; settings = {ASSET_TAGS = (); }; };
+		740F967E1BF37F8D00C1E3E5 /* GLMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 740F967D1BF37F8D00C1E3E5 /* GLMatrix.m */; };
+		74943D5F1BF0B4C300F3B506 /* FirstShader.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74943D5D1BF0B4C300F3B506 /* FirstShader.fs */; };
+		74943D601BF0B4C300F3B506 /* FirstShader.vs in Resources */ = {isa = PBXBuildFile; fileRef = 74943D5E1BF0B4C300F3B506 /* FirstShader.vs */; };
+		74943D641BF0C52100F3B506 /* PPNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 74943D631BF0C52100F3B506 /* PPNode.m */; };
+		74CE63461BFE19D00044C3BF /* ObjLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 74CE63451BFE19D00044C3BF /* ObjLoader.m */; };
+		74CE634A1BFE1E330044C3BF /* data.obj in Resources */ = {isa = PBXBuildFile; fileRef = 74CE63491BFE1E330044C3BF /* data.obj */; };
+		74CE634C1BFE292D0044C3BF /* banana.obj in Resources */ = {isa = PBXBuildFile; fileRef = 74CE634B1BFE292D0044C3BF /* banana.obj */; };
+		74CE634E1BFED8DD0044C3BF /* pyramid.obj in Resources */ = {isa = PBXBuildFile; fileRef = 74CE634D1BFED8DD0044C3BF /* pyramid.obj */; };
+		74CE63501BFEDE7D0044C3BF /* complicate.obj in Resources */ = {isa = PBXBuildFile; fileRef = 74CE634F1BFEDE7D0044C3BF /* complicate.obj */; };
 		74E6B3561BEF737400CC8A14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3551BEF737400CC8A14 /* main.m */; };
 		74E6B3591BEF737400CC8A14 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3581BEF737400CC8A14 /* AppDelegate.m */; };
 		74E6B35C1BEF737400CC8A14 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B35B1BEF737400CC8A14 /* ViewController.m */; };
 		74E6B35F1BEF737400CC8A14 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74E6B35D1BEF737400CC8A14 /* Main.storyboard */; };
 		74E6B3611BEF737400CC8A14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74E6B3601BEF737400CC8A14 /* Assets.xcassets */; };
 		74E6B3641BEF737400CC8A14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74E6B3621BEF737400CC8A14 /* LaunchScreen.storyboard */; };
-		74E6B3711BEF744000CC8A14 /* GLShader.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3701BEF744000CC8A14 /* GLShader.m */; settings = {ASSET_TAGS = (); }; };
-		74E6B3741BEF745800CC8A14 /* GLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3731BEF745800CC8A14 /* GLContext.m */; settings = {ASSET_TAGS = (); }; };
-		74E6B3771BEF76A700CC8A14 /* GLCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3761BEF76A700CC8A14 /* GLCamera.m */; settings = {ASSET_TAGS = (); }; };
+		74E6B3711BEF744000CC8A14 /* GLShader.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3701BEF744000CC8A14 /* GLShader.m */; };
+		74E6B3741BEF745800CC8A14 /* GLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3731BEF745800CC8A14 /* GLContext.m */; };
+		74E6B3771BEF76A700CC8A14 /* GLCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3761BEF76A700CC8A14 /* GLCamera.m */; };
 		74E6B3791BEF783800CC8A14 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E6B3781BEF783800CC8A14 /* GLKit.framework */; };
 		74E6B37B1BEF784000CC8A14 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E6B37A1BEF784000CC8A14 /* OpenGLES.framework */; };
-		74E6B3811BEF7CD700CC8A14 /* GLVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3801BEF7CD700CC8A14 /* GLVector.m */; settings = {ASSET_TAGS = (); }; };
-		74E6B3841BEF8ADC00CC8A14 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3831BEF8ADC00CC8A14 /* GLProgram.m */; settings = {ASSET_TAGS = (); }; };
-		74E74F511BF81CDF008E181D /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 74E74F501BF81CDF008E181D /* Default-568h@2x~iphone.png */; settings = {ASSET_TAGS = (); }; };
-		74E74F531BF81D12008E181D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 74E74F521BF81D12008E181D /* Default.png */; settings = {ASSET_TAGS = (); }; };
-		74E74F551BF81DAC008E181D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74E74F541BF81DAC008E181D /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
-		74E74F571BF83F8C008E181D /* TestImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 74E74F561BF83F8C008E181D /* TestImage.png */; settings = {ASSET_TAGS = (); }; };
+		74E6B3811BEF7CD700CC8A14 /* GLVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3801BEF7CD700CC8A14 /* GLVector.m */; };
+		74E6B3841BEF8ADC00CC8A14 /* GLProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3831BEF8ADC00CC8A14 /* GLProgram.m */; };
+		74E74F511BF81CDF008E181D /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 74E74F501BF81CDF008E181D /* Default-568h@2x~iphone.png */; };
+		74E74F531BF81D12008E181D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 74E74F521BF81D12008E181D /* Default.png */; };
+		74E74F551BF81DAC008E181D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74E74F541BF81DAC008E181D /* Images.xcassets */; };
+		74E74F571BF83F8C008E181D /* TestImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 74E74F561BF83F8C008E181D /* TestImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +50,13 @@
 		74943D5E1BF0B4C300F3B506 /* FirstShader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = FirstShader.vs; sourceTree = "<group>"; };
 		74943D621BF0C52100F3B506 /* PPNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNode.h; sourceTree = "<group>"; };
 		74943D631BF0C52100F3B506 /* PPNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPNode.m; sourceTree = "<group>"; };
+		74CE63441BFE19D00044C3BF /* ObjLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjLoader.h; sourceTree = "<group>"; };
+		74CE63451BFE19D00044C3BF /* ObjLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjLoader.m; sourceTree = "<group>"; };
+		74CE63481BFE1A740044C3BF /* DataStructure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataStructure.h; sourceTree = "<group>"; };
+		74CE63491BFE1E330044C3BF /* data.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data.obj; sourceTree = "<group>"; };
+		74CE634B1BFE292D0044C3BF /* banana.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = banana.obj; sourceTree = "<group>"; };
+		74CE634D1BFED8DD0044C3BF /* pyramid.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pyramid.obj; sourceTree = "<group>"; };
+		74CE634F1BFEDE7D0044C3BF /* complicate.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = complicate.obj; sourceTree = "<group>"; };
 		74E6B3511BEF737400CC8A14 /* shaderlib.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shaderlib.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74E6B3551BEF737400CC8A14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		74E6B3571BEF737400CC8A14 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -90,6 +102,10 @@
 		74943D5C1BF0B4B600F3B506 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				74CE634F1BFEDE7D0044C3BF /* complicate.obj */,
+				74CE634D1BFED8DD0044C3BF /* pyramid.obj */,
+				74CE634B1BFE292D0044C3BF /* banana.obj */,
+				74CE63491BFE1E330044C3BF /* data.obj */,
 				74E74F561BF83F8C008E181D /* TestImage.png */,
 				74E74F521BF81D12008E181D /* Default.png */,
 				74E74F501BF81CDF008E181D /* Default-568h@2x~iphone.png */,
@@ -108,9 +124,28 @@
 			name = Nodes;
 			sourceTree = "<group>";
 		};
+		74CE63431BFE19B10044C3BF /* ObjLoader */ = {
+			isa = PBXGroup;
+			children = (
+				74CE63441BFE19D00044C3BF /* ObjLoader.h */,
+				74CE63451BFE19D00044C3BF /* ObjLoader.m */,
+			);
+			name = ObjLoader;
+			sourceTree = "<group>";
+		};
+		74CE63471BFE1A420044C3BF /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				74CE63481BFE1A740044C3BF /* DataStructure.h */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
 		74E6B3481BEF737400CC8A14 = {
 			isa = PBXGroup;
 			children = (
+				74CE63471BFE1A420044C3BF /* Base */,
+				74CE63431BFE19B10044C3BF /* ObjLoader */,
 				740F966B1BF3749000C1E3E5 /* QuartzCore.framework */,
 				74943D611BF0C4D500F3B506 /* Nodes */,
 				74943D5C1BF0B4B600F3B506 /* res */,
@@ -236,14 +271,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				74943D5F1BF0B4C300F3B506 /* FirstShader.fs in Resources */,
+				74CE634A1BFE1E330044C3BF /* data.obj in Resources */,
 				74E74F571BF83F8C008E181D /* TestImage.png in Resources */,
 				74E74F551BF81DAC008E181D /* Images.xcassets in Resources */,
 				74E74F511BF81CDF008E181D /* Default-568h@2x~iphone.png in Resources */,
 				74943D601BF0B4C300F3B506 /* FirstShader.vs in Resources */,
+				74CE634E1BFED8DD0044C3BF /* pyramid.obj in Resources */,
 				74E6B3641BEF737400CC8A14 /* LaunchScreen.storyboard in Resources */,
 				74E74F531BF81D12008E181D /* Default.png in Resources */,
+				74CE634C1BFE292D0044C3BF /* banana.obj in Resources */,
 				74E6B3611BEF737400CC8A14 /* Assets.xcassets in Resources */,
 				74E6B35F1BEF737400CC8A14 /* Main.storyboard in Resources */,
+				74CE63501BFEDE7D0044C3BF /* complicate.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +305,7 @@
 				74943D641BF0C52100F3B506 /* PPNode.m in Sources */,
 				740F96671BF3053700C1E3E5 /* GLColor.m in Sources */,
 				74E6B3561BEF737400CC8A14 /* main.m in Sources */,
+				74CE63461BFE19D00044C3BF /* ObjLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,6 +11,8 @@
 #import <OpenGLES/ES2/glext.h>
 
 #import "GLProgram.h"
+#import "DataStructure.h"
+#import "ObjLoader.h"
 
 #define BUFFER_OFFSET(i) ((GLchar *)NULL + (i))
 
@@ -24,6 +26,7 @@
     GLuint  _glVerticeArray;
     GLuint  _glVerticeBuffer;
     GLProgram* _glProgram;
+    ModelData* _data;
 }
 
 -(id)init : (GLProgram*) program;

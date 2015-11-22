@@ -89,6 +89,7 @@ GLfloat gTexCoordData[] =
 {
     [EAGLContext setCurrentContext:glContext];
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
     
     _node = [[PPNode alloc] init: nil];
     _program = [[GLProgram alloc] init: @"FirstShader"];
@@ -138,13 +139,14 @@ GLfloat gTexCoordData[] =
 - (void)update
 {
     float aspect = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 1000.0f);
     
     // Compute the model view matrix for the object rendered with ES2
-    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -10.0f);
+    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -200.0f);
     modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 1.0f, 1.0f, 1.0f);
     
     _normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), NULL);
+    GLKMatrix4 scale = GLKMatrix4MakeScale(1.5, 1.5, 1.5);
     
     _modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
     

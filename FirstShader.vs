@@ -11,9 +11,9 @@ attribute vec4 color;
 //attribute vec3 normal;
 attribute vec2 aTexCoord;
 //
-varying lowp vec2 vTexCoord;
+varying highp vec2 vTexCoord;
 //
-varying lowp vec4 colorVarying;
+varying highp vec4 colorVarying;
 
 uniform mat4 modelViewProjectionMatrix;
 uniform mat3 normalMatrix;
