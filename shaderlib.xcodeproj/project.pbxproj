@@ -19,6 +19,7 @@
 		74CE634C1BFE292D0044C3BF /* banana.obj in Resources */ = {isa = PBXBuildFile; fileRef = 74CE634B1BFE292D0044C3BF /* banana.obj */; };
 		74CE634E1BFED8DD0044C3BF /* pyramid.obj in Resources */ = {isa = PBXBuildFile; fileRef = 74CE634D1BFED8DD0044C3BF /* pyramid.obj */; };
 		74CE63501BFEDE7D0044C3BF /* complicate.obj in Resources */ = {isa = PBXBuildFile; fileRef = 74CE634F1BFEDE7D0044C3BF /* complicate.obj */; };
+		74CE63591C020F850044C3BF /* Material.m in Sources */ = {isa = PBXBuildFile; fileRef = 74CE63581C020F850044C3BF /* Material.m */; };
 		74E6B3561BEF737400CC8A14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3551BEF737400CC8A14 /* main.m */; };
 		74E6B3591BEF737400CC8A14 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B3581BEF737400CC8A14 /* AppDelegate.m */; };
 		74E6B35C1BEF737400CC8A14 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E6B35B1BEF737400CC8A14 /* ViewController.m */; };
@@ -57,6 +58,8 @@
 		74CE634B1BFE292D0044C3BF /* banana.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = banana.obj; sourceTree = "<group>"; };
 		74CE634D1BFED8DD0044C3BF /* pyramid.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pyramid.obj; sourceTree = "<group>"; };
 		74CE634F1BFEDE7D0044C3BF /* complicate.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = complicate.obj; sourceTree = "<group>"; };
+		74CE63571C020F850044C3BF /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
+		74CE63581C020F850044C3BF /* Material.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Material.m; sourceTree = "<group>"; };
 		74E6B3511BEF737400CC8A14 /* shaderlib.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shaderlib.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74E6B3551BEF737400CC8A14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		74E6B3571BEF737400CC8A14 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -127,6 +130,8 @@
 		74CE63431BFE19B10044C3BF /* ObjLoader */ = {
 			isa = PBXGroup;
 			children = (
+				74CE63571C020F850044C3BF /* Material.h */,
+				74CE63581C020F850044C3BF /* Material.m */,
 				74CE63441BFE19D00044C3BF /* ObjLoader.h */,
 				74CE63451BFE19D00044C3BF /* ObjLoader.m */,
 			);
@@ -301,6 +306,7 @@
 				74E6B35C1BEF737400CC8A14 /* ViewController.m in Sources */,
 				74E6B3591BEF737400CC8A14 /* AppDelegate.m in Sources */,
 				740F966A1BF3058C00C1E3E5 /* GLVertex.m in Sources */,
+				74CE63591C020F850044C3BF /* Material.m in Sources */,
 				74E6B3711BEF744000CC8A14 /* GLShader.m in Sources */,
 				74943D641BF0C52100F3B506 /* PPNode.m in Sources */,
 				740F96671BF3053700C1E3E5 /* GLColor.m in Sources */,
