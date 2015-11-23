@@ -19,7 +19,7 @@
 -(id)init: (GLProgram*) program{
     if (self == [super init]){
         NSString* objFilename = [[NSBundle mainBundle] pathForResource:@"pyramid" ofType:@"obj"];
-        _data = [ObjLoader loadObj:objFilename];
+        _data = [[ObjLoader sharedInstance] loadObj:objFilename];
         
         glGenVertexArraysOES(1, &_glVerticeArray);
         glBindVertexArrayOES(_glVerticeArray);

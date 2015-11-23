@@ -8,68 +8,33 @@
 #import "ObjLoader.h"
 //#import <Foundation/Foundation.h>
 
-@implementation NSVertex
--(id) init{
-    self = [super init];
-    return self;
-}
-@end
 
-@implementation Vec2
--(id) init: (float)x: (float)y{
-    if (self = [super init]){
-        self.x = x;
-        self.y = y;
-    }
-    return self;
-}
-@end
-
-@implementation Vec3
--(id) init: (float)x: (float)y: (float) z{
-    if (self = [super init: x: y]){
-        self.z = z;
-    }
-    return self;
-}
-@end
-
-@implementation NSVector3Idx
-
--(id) init:(int) x: (int)y: (int)z
-{
-    if (self = [super init])
-    {
-        _data[0] = x;
-        _data[1] = y;
-        _data[2] = z;
-    }
-    return self;
-}
-
--(int *) data{
-    return _data;
-}
-
-@end
-
-@implementation NSTriangleIdx
-
--(id) init:(NSVector3Idx* ) pos: (NSVector3Idx* ) tuv: (NSVector3Idx* ) nrm{
-    if (self = [super init]){
-        self.pos = pos;
-        self.tuv = tuv;
-        self.nrm = nrm;
-        self.useNrm = YES;
-        self.useUV = YES;
-    }
-    return self;
-}
-@end
 
 @implementation ObjLoader
 
-+(NSArray*) parseFaces: (NSArray*) listItems
++(ObjLoader *)sharedInstance
+{
+    static ObjLoader * sharedSingleton = nil;
+    @synchronized([ObjLoader class]) {
+        if(sharedSingleton == nil)
+        {
+            sharedSingleton = [[self alloc] init];
+        }
+    }
+    return sharedSingleton;
+}
+
+-(id) init {
+    self = [super init];
+    _mHandlers = [[NSMutableDictionary alloc] init];
+    
+    //[self setInvok:self sel:@selector(_hndVector3Type: :) key:@"Ka"];
+    
+    return self;
+}
+
+
+-(void) parseTrianglesFromListItems: (NSArray*) listItems triangles: (NSMutableArray*) triangles posPoints: (NSArray*) posPoints texPoints: (NSArray*) texPoints nrmPoints: (NSArray* )nrmPoints
 {
     NSMutableArray* tris = [[NSMutableArray alloc] init];
     for (int i = 2; i < [listItems count]; ++i){
@@ -92,10 +57,42 @@
         }
         [tris addObject:strItems];
     }
-    return [tris copy];
+    
+    for (NSArray* tri in tris){
+        NSTriangleIdx * triangle = [[NSTriangleIdx alloc] init: [NSVector3Idx alloc]: [NSVector3Idx alloc]: [NSVector3Idx alloc]];
+        
+        for (int i = 0; i < 3; ++i){
+            NSArray * point = tri[i];
+            int vIdx = [point[0] intValue];
+            if (vIdx < 0){
+                vIdx = [posPoints count] + vIdx;
+            }
+            [triangle.pos data][i] = vIdx;
+            if (point[1] != [NSNull null]){
+                int uvIdx = [point[1] intValue];
+                if (uvIdx < 0){
+                    uvIdx = [texPoints count] + uvIdx;
+                }
+                [triangle.tuv data][i] = uvIdx;
+            }
+            else {
+                triangle.useUV = NO;
+            }
+            if (point[2] != [NSNull null]){
+                int nrmIdx = [point[2] intValue];
+                if (nrmIdx < 0){
+                    nrmIdx = [nrmPoints count] + nrmIdx;
+                }
+                [triangle.nrm data][i] = nrmIdx;
+            }else{
+                triangle.useNrm = NO;
+            }
+        }
+        [triangles addObject:triangle];
+    }
 }
 
-+(ModelData*) loadObj: (NSString*)objFilename{
+-(ModelData*) loadObj: (NSString*)objFilename{
     
     NSString* text = [NSString stringWithContentsOfFile:objFilename encoding:NSUTF8StringEncoding error:nil];
     NSArray *lines = [text componentsSeparatedByString:@"\n"];
@@ -103,8 +100,6 @@
     NSMutableArray *  texPoints = [[NSMutableArray alloc] init];
     NSMutableArray *  nrmPoints = [[NSMutableArray alloc] init];
     NSMutableArray *  triangles = [[NSMutableArray alloc] init];
-    BOOL useUV = YES;
-    BOOL useNrm= YES;
     for (NSString* str in lines){
         NSString * _str = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
@@ -119,71 +114,42 @@
         NSString* prefix = listItems[0];
         if ([prefix isEqualToString:@"v"])
         {
-            assert([listItems count] == 4);
-            float x = [listItems[1] floatValue];
-            float y = [listItems[2] floatValue];
-            float z = [listItems[3] floatValue];
-            [posPoints addObject: [[Vec3 alloc] init: x: y: z]];
+            Vec3 * point = [self _hndVector3: listItems];
+            [posPoints addObject: point];
             
         }else if([prefix isEqualToString:@"vt"])
         {
-            assert([listItems count] >= 3);
-            float x = [listItems[1] floatValue];
-            float y = [listItems[2] floatValue];
-            [texPoints addObject: [[Vec2 alloc] init: x: y]];
+            Vec2 * point = [self _hndVector2: listItems];
+            [texPoints addObject: point];
             
         }else if([prefix isEqualToString:@"vn"])
         {
-            assert([listItems count] == 4);
-            float x = [listItems[1] floatValue];
-            float y = [listItems[2] floatValue];
-            float z = [listItems[3] floatValue];
-            [nrmPoints addObject: [[Vec3 alloc] init: x: y: z]];
+            Vec3 * point = [self _hndVector3: listItems];
+            [nrmPoints addObject: point];
             
         }else if([prefix isEqualToString:@"f"])
         {
             [listItems removeObjectAtIndex:0];
-            NSArray * faces = [ObjLoader parseFaces: listItems];
-            for (NSArray* tri in faces){
-                NSTriangleIdx * triangle = [[NSTriangleIdx alloc] init: [NSVector3Idx alloc]: [NSVector3Idx alloc]: [NSVector3Idx alloc]];
-                
-                for (int i = 0; i < 3; ++i){
-                    NSArray * point = tri[i];
-                    int vIdx = [point[0] intValue];
-                    if (vIdx < 0){
-                        vIdx = [posPoints count] + vIdx;
-                    }
-                    [triangle.pos data][i] = vIdx;
-                    if (point[1] != [NSNull null]){
-                        int uvIdx = [point[1] intValue];
-                        if (uvIdx < 0){
-                            uvIdx = [texPoints count] + uvIdx;
-                        }
-                        [triangle.tuv data][i] = uvIdx;
-                    }
-                    else {
-                        useUV = NO;
-                        triangle.useUV = NO;
-                    }
-                    if (point[2] != [NSNull null]){
-                        int nrmIdx = [point[2] intValue];
-                        if (nrmIdx < 0){
-                            nrmIdx = [nrmPoints count] + nrmIdx;
-                        }
-                        [triangle.nrm data][i] = nrmIdx;
-                    }else{
-                        useNrm = NO;
-                        triangle.useNrm = NO;
-                    }
-                }
-                [triangles addObject:triangle];
-            }
+            [self parseTrianglesFromListItems: listItems triangles: triangles posPoints: posPoints texPoints: texPoints nrmPoints: nrmPoints];
         }
     }
-    return [ObjLoader postProcess:[triangles copy] :[posPoints copy ]:[texPoints copy] :[nrmPoints copy]];
+    return [self postProcess:[triangles copy] vertices:[posPoints copy] texUVs:[texPoints copy] Nrms:[nrmPoints copy]];
 }
 
-+(ModelData *) postProcess: (NSMutableArray*) triangles: (NSMutableArray*) vertices: (NSMutableArray*) texUVs: (NSMutableArray*) Nrms
+-(Vec3*) _hndVector3: (NSArray *) listItems{
+    float x = [listItems[1] floatValue];
+    float y = [listItems[2] floatValue];
+    float z = [listItems[3] floatValue];
+    return [[Vec3 alloc] init: x: y: z];
+}
+
+-(Vec2*) _hndVector2: (NSArray *) listItems{
+    float x = [listItems[1] floatValue];
+    float y = [listItems[2] floatValue];
+    return [[Vec2 alloc] init: x: y];
+}
+
+-(ModelData*) postProcess: (NSMutableArray*) triangles vertices: (NSMutableArray*) vertices texUVs: (NSMutableArray*) texUVs Nrms: (NSMutableArray*) Nrms
 {
     
     NSMutableDictionary * dictIndex = [[NSMutableDictionary alloc] init];
@@ -199,7 +165,7 @@
                 Vec3* pos= vertices[vIdx-1];
                 Vec2* uv = texUVs[uIdx-1];
                 Vec3* nrm= Nrms[nIdx-1];
-                dictionary[keyX] = [ObjLoader packVerticeData: pos: uv: nrm];
+                dictionary[keyX] = [self packVerticeData: pos uv:uv nrm:nrm];
             }
         }
     }
@@ -217,8 +183,6 @@
         for (int i = 0; i < 3; ++i)target->position[i] = value.vertex.position[i];
         for (int i = 0; i < 3; ++i)target->normal[i] = value.vertex.normal[i];
         for (int i = 0; i < 2; ++i)target->uv[i] = value.vertex.uv[i];
-        
-        NSLog(@"### %f, %f", value.vertex.uv[0], value.vertex.uv[1]);
     }
     
     GLushort *indices = (GLushort*) malloc(sizeof(short) * 3 * [triangles count]);
@@ -246,7 +210,8 @@
     return model;
 }
 
-+(NSVertex *) packVerticeData: (Vec3*) position: (Vec2*) uv: (Vec3*) nrm{
+-(NSVertex *) packVerticeData: (Vec3*) position uv:(Vec2*) uv nrm: (Vec3*) nrm
+{
     Vertex vertex;
     
     vertex.position[0] = position.x;

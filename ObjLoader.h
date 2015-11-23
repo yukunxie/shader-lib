@@ -7,52 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DataStructure.h"
+#import "ObjLoaderAssist.h"
 
-
-@interface NSVertex : NSObject
--(id) init;
-@property Vertex vertex;
-@end
-
-@interface Vec2 : NSObject
-@property float x, y;
--(id) init: (float)x: (float)y;
-@end
-
-@interface Vec3 : Vec2
-@property float z;
--(id) init: (float)x: (float)y: (float)z;
-@end
-
-@interface NSVector3Idx : NSObject
-{
-    int _data[3];
-}
--(int *) data;
--(id) init:(int) x: (int)y: (int)z;
-@end
-
-@interface NSTriangleIdx : NSObject
-@property (strong, nonatomic) NSVector3Idx* pos;
-@property (strong, nonatomic) NSVector3Idx* tuv;
-@property (strong, nonatomic) NSVector3Idx* nrm;
-
-@property BOOL useUV;
-@property BOOL useNrm;
-
--(id) init:(NSVector3Idx* ) pos: (NSVector3Idx* ) tuv: (NSVector3Idx* ) nrm;
-@end
-
-typedef struct{
-    unsigned int vertices[3];
-}Face;
 
 @interface ObjLoader : NSObject
+{
+    NSMutableDictionary * _mHandlers;
+}
 
-+(ModelData*) loadObj: (NSString*) objFilename;
-+(NSArray*) parseFaces: (NSArray*) listItems;
-+(ModelData*) postProcess: (NSMutableArray*) triangles: (NSMutableArray*) vertices: (NSMutableArray*) texUVs: (NSMutableArray*) Nrms;
-+(NSVertex *) packVerticeData: (Vec3*) position: (Vec2*) uv: (Vec3*) nrm;
+-(id) init;
++(ObjLoader*) sharedInstance;
+
+-(ModelData*) loadObj: (NSString*) objFilename;
+-(void) parseTrianglesFromListItems: (NSArray*) listItems triangles: (NSMutableArray*) triangles posPoints: (NSArray*) posPoints texPoints: (NSArray*) texPoints nrmPoints: (NSArray* )nrmPoints;
+-(ModelData*) postProcess : (NSMutableArray*) triangles vertices: (NSMutableArray*) vertices texUVs: (NSMutableArray*) texUVs Nrms: (NSMutableArray*) Nrms;
+-(NSVertex *) packVerticeData: (Vec3*) position uv:(Vec2*) uv nrm: (Vec3*) nrm;
+
+-(Vec3*) _hndVector3: (NSArray *) listItems;
+-(Vec2*) _hndVector2: (NSArray *) listItems;
 
 @end
