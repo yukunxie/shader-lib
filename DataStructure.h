@@ -17,11 +17,18 @@ typedef struct {
     GLfloat uv[2];
 } Vertex;
 
-typedef struct{
-    Vertex* vertices;
-    int vertexNum;
+typedef struct {
+    char matName[256];
     GLushort * triIndices;
     int idxNum;
+} SubObjData;
+
+typedef struct{
+    char matFilename[256];
+    Vertex* vertices;
+    int vertexNum;
+    SubObjData * subObjects;
+    int objNum;
 }ModelData;
 
 

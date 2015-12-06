@@ -99,7 +99,16 @@
     NSMutableArray *  posPoints = [[NSMutableArray alloc] init];
     NSMutableArray *  texPoints = [[NSMutableArray alloc] init];
     NSMutableArray *  nrmPoints = [[NSMutableArray alloc] init];
-    NSMutableArray *  triangles = [[NSMutableArray alloc] init];
+    NSMutableArray *  triangles = nil;
+    NSMutableArray *  shapes = [[NSMutableArray alloc] init];
+    
+    ModelData * modelData = (ModelData*) malloc(sizeof(ModelData));
+    modelData->objNum = 0;
+    modelData->subObjects = NULL;
+    modelData->vertices = NULL;
+    modelData->vertexNum= 0;
+    memset(modelData->matFilename, 0, sizeof(modelData->matFilename));
+    
     for (NSString* str in lines){
         NSString * _str = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
@@ -132,8 +141,30 @@
             [listItems removeObjectAtIndex:0];
             [self parseTrianglesFromListItems: listItems triangles: triangles posPoints: posPoints texPoints: texPoints nrmPoints: nrmPoints];
         }
+        else if([prefix isEqualToString:@"usemtl"])
+        {
+            triangles = [[NSMutableArray alloc] init];
+            [shapes addObject:triangles];
+            
+            int mtlCount = modelData->objNum + 1;
+            SubObjData* subObjs = modelData->subObjects;
+            SubObjData* newObjs = (SubObjData*) malloc(sizeof(SubObjData) * mtlCount);
+            memcpy(newObjs, subObjs, (mtlCount - 1) * sizeof(SubObjData));
+            modelData->subObjects = newObjs;
+            free(subObjs);
+            SubObjData* subObj = modelData->subObjects + (mtlCount - 1);
+            subObj->idxNum = 0;
+            strncpy(subObj->matName, [listItems[1] UTF8String], [listItems[1] length]);
+            subObj->triIndices = NULL;
+            modelData->objNum = mtlCount;
+                    
+        }
+        else if([prefix isEqualToString:@"mtllib"])
+        {
+            strncpy(modelData->matFilename, [listItems[1] UTF8String], [listItems[1] length]);
+        }
     }
-    return [self postProcess:[triangles copy] vertices:[posPoints copy] texUVs:[texPoints copy] Nrms:[nrmPoints copy]];
+    return [self postProcess: modelData shapes: shapes vertices:[posPoints copy] texUVs:[texPoints copy] Nrms:[nrmPoints copy]];
 }
 
 -(Vec3*) _hndVector3: (NSArray *) listItems{
@@ -149,23 +180,29 @@
     return [[Vec2 alloc] init: x: y];
 }
 
--(ModelData*) postProcess: (NSMutableArray*) triangles vertices: (NSMutableArray*) vertices texUVs: (NSMutableArray*) texUVs Nrms: (NSMutableArray*) Nrms
+-(ModelData*) postProcess : (ModelData*) modelData shapes: (NSMutableArray*) shapes vertices: (NSMutableArray*) vertices texUVs: (NSMutableArray*) texUVs Nrms: (NSMutableArray*) Nrms
 {
     
     NSMutableDictionary * dictIndex = [[NSMutableDictionary alloc] init];
     NSMutableDictionary * dictionary = [[NSMutableDictionary alloc] init];
     
-    for(NSTriangleIdx * tri in triangles){
-        for (int i = 0; i < 3; ++i){
-            int vIdx = tri.pos.data[i];
-            int uIdx = tri.tuv.data[i];
-            int nIdx = tri.nrm.data[i];
-            NSString * keyX = [NSString stringWithFormat:@"%d-%d-%d", vIdx, uIdx, nIdx];
-            if (nil == [dictionary objectForKey: keyX]){
-                Vec3* pos= vertices[vIdx-1];
-                Vec2* uv = texUVs[uIdx-1];
-                Vec3* nrm= Nrms[nIdx-1];
-                dictionary[keyX] = [self packVerticeData: pos uv:uv nrm:nrm];
+    for (NSMutableArray * triangles in shapes){
+        for(NSTriangleIdx * tri in triangles){
+            if ([tri isEqual:[NSNull null]]){
+                continue;
+            }
+            
+            for (int i = 0; i < 3; ++i){
+                int vIdx = tri.pos.data[i];
+                int uIdx = tri.tuv.data[i];
+                int nIdx = tri.nrm.data[i];
+                NSString * keyX = [NSString stringWithFormat:@"%d-%d-%d", vIdx, uIdx, nIdx];
+                if (nil == [dictionary objectForKey: keyX]){
+                    Vec3* pos= vertices[vIdx-1];
+                    Vec2* uv = texUVs[uIdx-1];
+                    Vec3* nrm= Nrms[nIdx-1];
+                    dictionary[keyX] = [self packVerticeData: pos uv:uv nrm:nrm];
+                }
             }
         }
     }
@@ -185,29 +222,30 @@
         for (int i = 0; i < 2; ++i)target->uv[i] = value.vertex.uv[i];
     }
     
-    GLushort *indices = (GLushort*) malloc(sizeof(short) * 3 * [triangles count]);
-    
-    count = 0;
-    for(NSTriangleIdx * tri in triangles){
-        NSMutableString * text = [[NSMutableString alloc] init];
-        for (int i = 0; i < 3; ++i){
-            int vIdx = tri.pos.data[i];
-            int uIdx = tri.tuv.data[i];
-            int nIdx = tri.nrm.data[i];
-            NSString * keyX = [NSString stringWithFormat:@"%d-%d-%d", vIdx, uIdx, nIdx];
-            [text appendString: keyX];
-            [text appendString: [NSString stringWithFormat: @"[%d];\t", [[dictIndex objectForKey: keyX] shortValue]]];
-            indices[count++] = [[dictIndex objectForKey: keyX] shortValue];
+    for (int i = 0; i < modelData->objNum; ++i){
+        NSArray * triangles = shapes[i];
+        SubObjData *subObject = &modelData->subObjects[i];
+        subObject->idxNum = 3 * [triangles count];
+        subObject->triIndices = (GLushort*) malloc(sizeof(short) * subObject->idxNum);
+        
+        count = 0;
+        for(NSTriangleIdx * tri in triangles){
+            NSMutableString * text = [[NSMutableString alloc] init];
+            for (int i = 0; i < 3; ++i){
+                int vIdx = tri.pos.data[i];
+                int uIdx = tri.tuv.data[i];
+                int nIdx = tri.nrm.data[i];
+                NSString * keyX = [NSString stringWithFormat:@"%d-%d-%d", vIdx, uIdx, nIdx];
+                [text appendString: keyX];
+                [text appendString: [NSString stringWithFormat: @"[%d];\t", [[dictIndex objectForKey: keyX] shortValue]]];
+                subObject->triIndices[count++] = [[dictIndex objectForKey: keyX] shortValue];
+            }
         }
     }
+    modelData->vertices = vertexData;
+    modelData->vertexNum= [dictIndex count];
     
-    ModelData * model = (ModelData*) malloc(sizeof(ModelData));
-    model->vertices = vertexData;
-    model->vertexNum= [dictIndex count];
-    model->idxNum = 3 * [triangles count];
-    model->triIndices = indices;
-    
-    return model;
+    return modelData;
 }
 
 -(NSVertex *) packVerticeData: (Vec3*) position uv:(Vec2*) uv nrm: (Vec3*) nrm

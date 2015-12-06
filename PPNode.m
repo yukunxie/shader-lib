@@ -48,7 +48,9 @@
 
 -(void)renderNode{
     
-    glDrawElements(GL_TRIANGLES, _data->idxNum, GL_UNSIGNED_SHORT, _data->triIndices);
+    for (int i = 0; i < _data->objNum; ++i){
+        glDrawElements(GL_TRIANGLES, _data->subObjects[i].idxNum, GL_UNSIGNED_SHORT, _data->subObjects[i].triIndices);
+    }
     
 //    [_glProgram linkProgram];
 //    glBindVertexArrayOES(_glVerticeArray);
